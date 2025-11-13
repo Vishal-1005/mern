@@ -1,0 +1,88 @@
+Week 10
+write a program to create a digital clock using React.js
+Create react app by using
+npx create-react-app digital-clock
+cd digital-clock
+npm start
+
+src/App.js
+import React, { useState, useEffect } from "react";
+import "./App.css";
+
+function App() {
+  const [time, setTime] = useState(new Date().toLocaleTimeString());
+
+  // Update the time every second
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setTime(new Date().toLocaleTimeString());
+    }, 1000);
+
+    // Cleanup timer when component unmounts
+    return () => clearInterval(timer);
+  }, []);
+
+  return (
+    <div className="clock-container">
+      <h1>Digital Clock</h1>
+      <div className="clock">
+        {time}
+      </div>
+    </div>
+  );
+}
+
+export default App;
+
+src/App.css
+
+body {
+  background-color: #282c34;
+  color: white;
+  font-family: "Arial", sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+}
+
+.clock-container {
+  text-align: center;
+}
+
+h1 {
+  font-size: 2rem;
+  margin-bottom: 20px;
+}
+
+.clock {
+  font-size: 3rem;
+  background-color: #1c1f26;
+  padding: 20px 50px;
+  border-radius: 15px;
+  box-shadow: 0 0 20px #00bcd4;
+}
+
+Run by Using
+npm start
+
+
+VIVA 
+
+Here are short and clear answers:
+
+1. What is useEffect used for in React?
+useEffect is used to run side effects in a component (like timers, API calls, or updating the DOM).
+
+2. Why do we use clearInterval inside useEffect?
+To stop the interval when the component unmounts, preventing memory leaks and unwanted repeated execution.
+
+3. What does useState do in this project?
+useState stores and updates the component’s changing data (state), like the current time.
+
+4. How often does setInterval run?
+It runs repeatedly after the specified time delay (e.g., every 1000 ms = 1 second).
+
+5. What function gives the local time as a string?
+The toLocaleTimeString() function returns the current time as a local time string.

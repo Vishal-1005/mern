@@ -1,0 +1,99 @@
+ CREATE A INDEX.JS FILE FIRST
+ 
+ Index.js
+
+const { MongoClient } = require("mongodb");
+
+// Replace <username>, <password>, and <myDatabase> with  Atlas credentials
+const uri = "mongodb+srv://mownika:admin@cluster0.iwolo6u.mongodb.net/newdb?retryWrites=true&w=majority&appName=Cluster0";
+
+const client = new MongoClient(uri);
+
+async function run() {
+  try {
+    // Connect to MongoDB Atlas
+    await client.connect();
+    console.log("Connected to MongoDB Atlas");
+
+    const db = client.db("newdb");       // Use your database name
+    const students = db.collection("students");
+
+    // Check if collection is empty
+    const count = await students.countDocuments();
+    if (count === 0) {
+      // Insert sample data
+      await students.insertMany([
+        { name: "Abhay", age: 21, grade: 90 },
+        { name: "abhi", age: 22, grade: 85 },
+        { name: "sai", age: 23, grade: 95 },
+        { name: "pavan", age: 21, grade: 88 },
+        { name: "krishna", age: 22, grade: 92 }
+      ]);
+      console.log("Sample data inserted");
+    }
+
+    // 1. Count all students
+    const totalStudents = await students.countDocuments();
+    console.log("Total students:", totalStudents);
+
+    // 2. Count students with grade > 85
+    const highGradeCount = await students.countDocuments({ grade: { $gt: 85 } });
+    console.log("Students with grade > 85:", highGradeCount);
+
+    // 3. Sort students by grade descending
+    const sortedStudents = await students.find().sort({ grade: -1 }).toArray();
+    console.log("Students sorted by grade descending:", sortedStudents);
+
+    // 4. Skip first 2 students
+    const skippedStudents = await students.find().sort({ grade: -1 }).skip(2).toArray(); 
+    console.log("After skipping top 2 students:", skippedStudents);
+
+    // 5. Limit top 3 students
+    const top3Students = await students.find().sort({ grade: -1 }).limit(3).toArray();
+    console.log("Top 3 students:", top3Students);
+
+    // 6. Skip 1 and limit 2 (pagination example)
+    const paginatedStudents = await students.find().sort({ grade: -1 }).skip(1).limit(2).toArray();
+    console.log("Pagination example (skip 1, limit 2):", paginatedStudents);
+
+  } catch (error) {
+    console.error("Error:", error);
+  } finally {
+    await client.close();
+    console.log("Disconnected from MongoDB Atlas");
+  }
+}
+
+run();
+
+Output :
+npm init -y
+npm install mongodb
+node index.js
+
+
+VIVA Questions
+
+1. What is the purpose of MongoClient in the program?
+Answer: It is used to create a connection between Node.js and MongoDB so we can perform database operations.
+
+2. Why do we use await client.connect()?
+Answer: To asynchronously connect to the MongoDB server before performing any operations.
+
+3. What does countDocuments() do in the program?
+Answer: It counts the number of documents in a collection, either total or filtered by a condition.
+
+4. Why do we check if the collection is empty before inserting sample data?
+Answer: To avoid inserting duplicate data every time the program runs.
+
+5. How does find().sort({ grade: -1 }) work in the program?
+Answer: It retrieves all documents from the collection and sorts them by grade in descending order.
+
+6. What is the effect of using skip(2) and limit(3) together?
+Answer: It skips the first 2 documents and then returns the next 3 documents—useful for pagination.
+
+7. Why do we use .toArray() after find()?
+Answer: Because find() returns a cursor, and .toArray() converts it into an array so we can print or manipulate the documents easily.
+
+8. How to modify the program to connect to MongoDB Atlas instead of local MongoDB?
+Answer: Replace the local URI with the Atlas connection string (including username, password, and database name) provided by MongoDB Atlas.

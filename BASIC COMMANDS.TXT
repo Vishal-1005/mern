@@ -1,0 +1,64 @@
+Basic Database Commands
+
+1) MongoDB Help: To get a list of commands, type db.help() in MongoDB client: db.help
+2) Show All Databases: to get list of all databases :  show dbs
+ 3) Create new database:  To create a new database: use DATABASE_NAME
+4) Know your current selected database: To know your current working/selected database execute: db
+5) Drop database: To drop the database execute: db.dropDatabase()
+6) To create the new collection execute: db.createCollection(name)
+7) To check collections list: To get the list of collections created execute : Show collections
+8) Drop collection: To drop the selected collection execute : db.COLLECTION_NAME.drop()
+9)  Insert document in collection: 
+To insert single document in selected collection execute the following command
+db.COLLECTION_NAME.insert(document)
+To insert multiple documents in selected collection execute following command
+db.COLLECTION_NAME.insertMany(documents)
+10) Get collection document
+To get the list documents in collection: db.COLLECTION_NAME.find().pretty()
+11) Update document
+
+To update the document in collection execute: db.COLLECTION_NAME.update(SELECTION_CRITERIA, UPDATED_DATA)
+12) Delete document: To delete document in selected collection :db.COLLECTION_NAME.remove(DELLETION_CRITTERIA)
+
+
+
+CODEEE :
+
+
+Create collection
+// 1. Switch/create database
+use college
+// Output: switched to db college
+
+// 2. Create collection (optional, auto-created on insert)
+db.createCollection("students")
+
+// 3. Insert documents
+db.students.insertMany([
+  {name: "pavan", age: 20, dept: "CSE"},
+  {name: "Raghu", age: 21, dept: "CSE"},
+  {name: "Abhay", age: 22, dept: "ECE"}
+])
+// Output: acknowledged: true, insertedIds: { ... }
+
+// 4. Display all documents
+db.students.find().pretty()
+// Output: JSON documents with _id, name, age, dept
+
+// 5. Query with filter
+db.students.find({dept:"CSE"})
+// Output: only CSE related
+
+// 6. Update a record
+db.students.updateOne({name:"Abhay"}, {$set: {age:21}})
+// Output: { acknowledged: true, matchedCount: 1, modifiedCount: 1 }
+
+// 7. Delete a record
+db.students.deleteOne({name:"pavan"})
+// Output: { acknowledged: true, deletedCount: 1 }
+
+// 8. Drop collection
+db.students.drop()
+
+// 9. Drop entire database
+db.dropDatabase()

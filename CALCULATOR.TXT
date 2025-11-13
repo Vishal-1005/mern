@@ -1,0 +1,194 @@
+Week 9
+write a program to create a simple calculator application using react.js
+npx create-react-app calculator
+cd calculator
+npm start
+
+app.js
+import React, { useState } from "react";
+import "./App.css";
+
+function App() {
+  const [input, setInput] = useState("");
+
+  // Function to handle button click
+  const handleClick = (value) => {
+    setInput(input + value);
+  };
+
+  // Function to clear the input
+  const handleClear = () => {
+    setInput("");
+  };
+
+  // Function to calculate the result
+  const handleCalculate = () => {
+    try {
+      // eslint-disable-next-line no-eval
+      setInput(eval(input).toString());
+    } catch (error) {
+      setInput("Error");
+    }
+  };
+
+  return (
+    <div className="calculator">
+      <h1>React Calculator</h1>
+      <input type="text" value={input} readOnly />
+
+      <div className="buttons">
+        <button onClick={handleClear}>C</button>
+        <button onClick={() => handleClick("/")}>/</button>
+        <button onClick={() => handleClick("*")}>*</button>
+        <button onClick={() => handleClick("-")}>-</button>
+
+        <button onClick={() => handleClick("7")}>7</button>
+        <button onClick={() => handleClick("8")}>8</button>
+        <button onClick={() => handleClick("9")}>9</button>
+        <button onClick={() => handleClick("+")}>+</button>
+
+        <button onClick={() => handleClick("4")}>4</button>
+        <button onClick={() => handleClick("5")}>5</button>
+        <button onClick={() => handleClick("6")}>6</button>
+        <button onClick={handleCalculate}>=</button>
+
+        <button onClick={() => handleClick("1")}>1</button>
+        <button onClick={() => handleClick("2")}>2</button>
+        <button onClick={() => handleClick("3")}>3</button>
+        <button onClick={() => handleClick("0")}>0</button>
+
+        <button onClick={() => handleClick(".")}>.</button>
+      </div>
+    </div>
+  );
+}
+
+export default App;
+
+
+
+app.css
+body {
+  background-color: #f2f2f2;
+  font-family: Arial, sans-serif;
+  text-align: center;
+  padding: 30px;
+}
+
+.calculator {
+  background: white;
+  width: 260px;
+  margin: auto;
+  border-radius: 15px;
+  box-shadow: 0px 0px 10px gray;
+  padding: 20px;
+}
+
+input {
+  width: 220px;
+  height: 40px;
+  font-size: 20px;
+  margin-bottom: 15px;
+  text-align: right;
+  padding: 5px;
+}
+
+.buttons {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+}
+
+button {
+  height: 50px;
+  font-size: 18px;
+  border: none;
+  border-radius: 10px;
+  background-color: #007bff;
+  color: white;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+h1 {
+  margin-bottom: 15px;
+}
+
+
+
+
+Run the Application
+
+npm start
+
+VIVA 
+
+Here are the **short and clear answers** for all the questions:
+
+---
+
+### **1. What is React?**
+
+React is a JavaScript library used to build fast and interactive user interfaces, mainly for single-page applications.
+
+---
+
+### **2. What is the purpose of useState in React?**
+
+useState is used to create and manage state (changing data) inside a React component.
+
+---
+
+### **3. What is the role of eval() in this program?**
+
+`eval()` evaluates a string as JavaScript code, often used here to calculate expressions in a calculator app.
+
+---
+
+### **4. What does readOnly do in the input element?**
+
+`readOnly` prevents the user from typing directly in the input box while still allowing the program to update its value.
+
+---
+
+### **5. What happens when we click a button?**
+
+When a button is clicked, it triggers an event handler function that updates the input or performs a calculation.
+
+---
+
+### **6. What is the difference between class and className in React?**
+
+HTML uses `class`, but React uses `className` because “class” is a reserved keyword in JavaScript.
+
+---
+
+### **7. Why do we import "./App.css"?**
+
+We import `App.css` to apply external CSS styles to the React component.
+
+---
+
+### **8. What are Hooks in React?**
+
+Hooks are special functions (like useState, useEffect) that let you use state and other React features in functional components.
+
+---
+
+### **9. What is JSX?**
+
+JSX is a JavaScript syntax extension that lets you write HTML-like code inside JavaScript.
+
+---
+
+### **10. Can you use multiple states in a single component?**
+
+Yes, you can use multiple `useState` hooks inside the same component.
+
+---
+
+If you want I can give **very short one-line answers**, or **slightly detailed answers** — just tell me!
