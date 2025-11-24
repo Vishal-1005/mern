@@ -1,0 +1,37 @@
+// Import the 'fs' module
+const fs = require('fs');
+
+// Write data to a new file
+fs.writeFile('example.txt', 'This is the first line.\n', (err) => {
+  if (err) throw err;
+  console.log('File created and data written.');
+
+  // Read the file
+  fs.readFile('example.txt', 'utf8', (err, data) => {
+    if (err) throw err;
+    console.log('File content after writing:');
+    console.log(data);
+
+    // Append more data to the file
+    fs.appendFile('example.txt', 'This is an appended line.\n', (err) => {
+      if (err) throw err;
+      console.log('Data appended to file.');
+
+      // Read the file again
+      fs.readFile('example.txt', 'utf8', (err, updatedData) => {
+        if (err) throw err;
+        console.log('File content after appending:');
+        console.log(updatedData);
+
+        // Delete the file
+        fs.unlink('example.txt', (err) => {
+          if (err) throw err;
+          console.log('File deleted successfully.');
+        });
+      });
+    });
+  });
+});
+
+Output:
+Node fileoperations.js

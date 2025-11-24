@@ -1,0 +1,62 @@
+const http = require('http');
+const url = require('url');
+const querystring = require('querystring');
+
+const server = http.createServer((req, res) => {
+    // Parse the URL to get the pathname and query string
+    const parsedUrl = url.parse(req.url);
+    const pathname = parsedUrl.pathname;
+
+    // Check if the request is for the form submission endpoint
+    if (pathname === '/submit-form' && req.method === 'GET') {
+        // Parse the query string into an object
+        const queryData = querystring.parse(parsedUrl.query);
+
+        // Set the response header
+        res.writeHead(200, { 'Content-Type': 'text/html' });
+
+        // Generate the response based on the query data
+        let responseHtml = '<h1>Form Data Received:</h1>';
+        if (Object.keys(queryData).length > 0) {
+            responseHtml += '<ul>';
+            for (const key in queryData) {
+                responseHtml += `<li><strong>${key}:</strong> ${queryData[key]}</li>`;
+            }
+            responseHtml += '</ul>';
+        } else {
+            responseHtml += '<p>No data submitted in the query string.</p>';
+        }
+
+        res.end(responseHtml);
+    } else if (pathname === '/') {
+        // Serve a simple HTML form
+        res.writeHead(200, { 'Content-Type': 'text/html' });
+        res.end(`
+            <!DOCTYPE html>
+            <html>
+            <head>
+                <title>Simple Form</title>
+            </head>
+            <body>
+                <h1>Submit Data via GET</h1>
+                <form action="/submit-form" method="GET">
+                    <label for="name">Name:</label><br>
+                    <input type="text" id="name" name="userName"><br><br>
+                    <label for="email">Email:</label><br>
+                    <input type="email" id="email" name="userEmail"><br><br>
+                    <input type="submit" value="Submit">
+                </form>
+            </body>
+            </html>
+        `);
+    } else {
+        // Handle other requests (e.g., 404 Not Found)
+        res.writeHead(404, { 'Content-Type': 'text/plain' });
+        res.end('404 Not Found');
+    }
+});
+
+const PORT = 3000;
+server.listen(PORT, () => {
+    console.log(`Server running at http://localhost:${PORT}/`);
+});
